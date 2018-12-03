@@ -49,6 +49,23 @@ app.get('/login',function(request,response){
 	});	
 });
 
+app.get('/menu',function(request,response){
+
+	var db = utils.getDb();
+	docs = db.collection('menu').find().toArray(function(err,docs){
+		if (err){
+			response.send('Unable to get the menu');
+		}else{
+			response.render('menu.hbs',{
+				menu:docs,
+				title:"Menu Page",
+				pagename:"Menu Page",
+				year: new Date().getFullYear()
+			});
+		}
+	});
+});
+
 app.post('/login',function(request,response){
 	var usrname = request.body.usrname,
 		password = request.body.password;
